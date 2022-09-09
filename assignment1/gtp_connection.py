@@ -284,9 +284,23 @@ class GtpConnection:
         """ Implement this function for Assignment 1 """
         self.respond("unknown")
 
-    def gogui_rules_legal_moves_cmd(self, args):
+    def gogui_rules_legal_moves_cmd(self, args: List[str]) -> None:
+
         """ Implement this function for Assignment 1 """
-        self.respond()
+
+        if self.board.end_of_game:
+            self.respond()
+        else: 
+            #redo as it is just copy and paste from go0
+            board_color: str = args[0].lower()
+            color: GO_COLOR = color_to_int(board_color)
+            moves: List[GO_POINT] = GoBoardUtil.generate_legal_moves(self.board, color)
+            gtp_moves: List[str] = []
+            for move in moves:
+                coords: Tuple[int, int] = point_to_coord(move, self.board.size)
+                gtp_moves.append(format_point(coords))
+            sorted_moves = " ".join(sorted(gtp_moves))
+            self.respond(sorted_moves)
         return
 
     def play_cmd(self, args: List[str]) -> None:
