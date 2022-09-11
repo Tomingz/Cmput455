@@ -111,7 +111,9 @@ class GoBoard(object):
         This prevents the board from being modified by the move
         """
         if point == PASS:
-            return True
+            return False
+        elif self._detect_and_process_capture(point):
+            return False
         board_copy: GoBoard = self.copy()
         can_play_move = board_copy.play_move(point, color)
         return can_play_move

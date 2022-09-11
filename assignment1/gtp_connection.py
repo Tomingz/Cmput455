@@ -286,12 +286,10 @@ class GtpConnection:
 
     def gogui_rules_legal_moves_cmd(self, args: List[str]) -> None:
 
-        """ Implement this function for Assignment 1 """
-
         if self.board.end_of_game:
             self.respond()
         else: 
-            #redo as it is just copy and paste from go0
+            #Code taken from is_legal from gtp_connection.py from go0and1
             board_color: str = args[0].lower()
             color: GO_COLOR = color_to_int(board_color)
             moves: List[GO_POINT] = GoBoardUtil.generate_legal_moves(self.board, color)
