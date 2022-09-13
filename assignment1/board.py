@@ -93,7 +93,7 @@ class GoBoard(object):
         """
         assert is_black_white(color)
         if point == PASS:
-            return True
+            return False
         # Could just return False for out-of-bounds, 
         # but it is better to know if this is called with an illegal point
         assert self.pt(1, 1) <= point <= self.pt(self.size, self.size)
@@ -110,9 +110,10 @@ class GoBoard(object):
         This method tries to play the move on a temporary copy of the board.
         This prevents the board from being modified by the move
         """
+        opp_block = self._block_of(color)
         if point == PASS:
             return False
-        elif self._detect_and_process_capture(point):
+        elif not self._has_liberty(opp_block):
             return False
         board_copy: GoBoard = self.copy()
         can_play_move = board_copy.play_move(point, color)
